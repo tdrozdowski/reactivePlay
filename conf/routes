@@ -3,9 +3,15 @@
 # ~~~~
 
 # Home page
-GET        /                    controllers.Application.index
+GET           /                              controllers.Application.index
 
-PUT       /profilePic/:email    controllers.GridFSController.uploadProfilePic(email : String)
+GET           /user/:email                   controllers.UserController.get(email : String)
+DELETE        /user/:email                   controllers.UserController.remove(email: String)
+PUT           /user/:email                   controllers.UserController.update(email: String)
+POST          /users                         controllers.UserController.create
+GET           /users/emails                  controllers.UserController.userEmails
+
+PUT           /user/:email/profilePic        controllers.GridFSController.uploadProfilePic(email : String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET           /assets/*file                  controllers.Assets.at(path="/public", file)
