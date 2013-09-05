@@ -14,5 +14,7 @@ GET           /users/emails                  controllers.UserController.userEmai
 PUT           /user/:email/profilePic        controllers.GridFSController.uploadProfilePic(email : String)
 GET           /user/:email/profilePic        controllers.GridFSController.getProfilePic(email: String)
 
+GET           /complaints                    controllers.ComplaintController.watchCollection
+
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                  controllers.Assets.at(path="/public", file)
