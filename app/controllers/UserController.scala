@@ -60,10 +60,11 @@ object UserController extends Controller with MongoController {
       }
   }
 
-  def update(email : String) = Action(parse.json) {
+  def update(id : String) = Action(parse.json) {
     request =>
       Async {
-        users.update(findByEmail(email), request.body).map {
+        val removeIdTransform = (__ \ '_id).json.prune
+        users.update(Json.obj("_id" -> Json.obj("$oid" -> id)), request.body.transform(removeIdTransform).get).map {
           lastError =>
             if (lastError.ok)
               Ok(Json.obj("results" -> "success"))
