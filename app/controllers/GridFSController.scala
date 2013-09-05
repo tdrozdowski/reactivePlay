@@ -43,4 +43,15 @@ object GridFSController extends Controller with MongoController {
       }
   }
 
+  def getProfilePic(email : String) = Action {
+    Async {
+       users.find(Json.obj("email" -> email)).one[JsValue].filter(_.isDefined).flatMap {
+          maybeUser =>
+            val profileId = (maybeUser.get \ "profilePic" \ "_id" \ "$oid").as[String]
+            serve(gridFS, gridFS.find(BSONDocument("_id" -> new BSONObjectID(profileId))))
+       }
+    }
+
+  }
+
 }
