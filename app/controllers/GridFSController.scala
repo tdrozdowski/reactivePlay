@@ -25,6 +25,7 @@ object GridFSController extends Controller with MongoController {
   def users = db.collection[JSONCollection]("users")
   val gridFS = new reactivemongo.api.gridfs.GridFS(db, "profilePics")
 
+  // NOTE - this should also remove the old image, if there is one to prevent your db from filling up with crap
   def uploadProfilePic(email : String) = Action(gridFSBodyParser(gridFS)) {
     request =>
       val futureUpload = for {
